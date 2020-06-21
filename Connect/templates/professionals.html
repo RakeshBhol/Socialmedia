@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block body %}
+
+  <!-- Content -->
+  <div id="content">
+
+    <!-- Banner -->
+    <section class="sub-bnr">
+      <div class="container">
+        <h2>Connections Available</h2>
+      </div>
+    </section>
+
+    <!-- Papular Professionals -->
+    <main class="cd-main-content">
+      <section class="padding-top-100 padding-bottom-100">
+        <div class="container">
+
+          <!-- filter -->
+          <div class="cd-tab-filter-wrapper filter-wrapper">
+            <div class="cd-tab-filter">
+
+              <!-- filter Btns -->
+              <ul class="cd-filters">
+                {% if what == "all" %}
+                    <li class="filter" ><a class="selected" href="{% url 'professional' 'all' %}">All</a></li>
+                {% else %}
+                    <li class="filter" ><a class="" href="{% url 'professional' 'all' %}">All</a></li>
+                {% endif %}
+
+                {% if what == "myreceived" %}
+                    <li class="filter" ><a class="selected" href="{% url 'professional' 'myreceived' %}">Requests ({{ con_request.count }})</a></li>
+                {% else %}
+                    <<li class="filter" ><a href="{% url 'professional' 'myreceived' %}">Requests ({{ con_request.count }})</a></li>
+                {% endif %}
+
+
+                <li class="filter" ><a href="{% url 'professional' 'Sent' %}">Sent ({{ con_sent.count }})</a></li>
+                <li class="filter" ><a href="{% url 'professional' 'Friends' %}">Friends ({{ con_friend.count }})</a></li>
+              </ul>
+            </div>
+          </div>
+          <section class="cd-gallery">
+              <ul>
+            {% if what == "all" %}
+                {% for p in all_users %}
+                    {% if p.usr.username != request.user.username %}
+                        <li class="mix">
+                            <div class="team-inside">
+                              <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{ p.name }}" >
+                                <div class="hover-over">
+                                  <div class="position-center-center"> <a href="#" class="btn">Follow</a>
+                                      <a href="{% url 'UserProfile' p.usr.username %}" class="btn">View Profile</a> </div>
+                                </div>
+                              </div>
+                              <div class="txt-sec">
+                                <h5><a href="#."> {{ p.name }} </a></h5>
+                                <span>{{ p.profile_title }}</span> <span><i class="fa fa-map-marker"></i>{{ p.location }}</span> </div>
+                            </div>
+                          </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if what == "myreceived" %}
+                {% for p in all_users %}
+                    {% if p.usr.username != request.user.username %}
+                        <li class="mix">
+                            <div class="team-inside">
+                              <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{ p.name }}" >
+                                <div class="hover-over">
+                                  <div class="position-center-center"> <a href="{% url 'connections' 'Accept_Request' p.id %}" class="btn">Accept</a>
+                                      <a href="{% url 'connections' 'Reject_Request' p.id %}" class="btn">Reject</a> </div>
+                                </div>
+                              </div>
+                              <div class="txt-sec">
+                                <h5><a href="#."> {{ p.name }} </a></h5>
+                                <span>{{ p.profile_title }}</span> <span><i class="fa fa-map-marker"></i>{{ p.location }}</span> </div>
+                            </div>
+                          </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+
+            {% if what == "Sent" %}
+                {% for p in all_users %}
+                    {% if p.usr.username != request.user.username %}
+                        <li class="mix">
+                            <div class="team-inside">
+                              <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{ p.name }}" >
+                                <div class="hover-over">
+                                  <div class="position-center-center"> <a href="#" class="btn">Remove</a>
+                                      <a href="{% url 'UserProfile' p.usr.username %}" class="btn">View Profile</a> </div>
+                                </div>
+                              </div>
+                              <div class="txt-sec">
+                                <h5><a href="#."> {{ p.name }} </a></h5>
+                                <span>{{ p.profile_title }}</span> <span><i class="fa fa-map-marker"></i>{{ p.location }}</span> </div>
+                            </div>
+                          </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+
+            {% if what == "Friends" %}
+                {% for p in all_users %}
+                    {% if p.usr.username != request.user.username %}
+                        <li class="mix">
+                            <div class="team-inside">
+                              <div class="img-sec"> <img src="{{ p.image.url }}" class="img-responsive" alt="{{ p.name }}" >
+                                <div class="hover-over">
+                                  <div class="position-center-center"> <a href="{% url 'connections' 'Remove_Connection' p.id %}" class="btn">Remove Connection</a>
+                                      <a href="{% url 'UserProfile' p.usr.username %}" class="btn">View Profile</a> </div>
+                                </div>
+                              </div>
+                              <div class="txt-sec">
+                                <h5><a href="#."> {{ p.name }} </a></h5>
+                                <span>{{ p.profile_title }}</span> <span><i class="fa fa-map-marker"></i>{{ p.location }}</span> </div>
+                            </div>
+                          </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            </ul>
+              <div class="clearfix"></div>
+
+            <!-- Btn Center -->
+            <div class="btn-center margin-top-30 text-center"> <a href="" class="btn btn-inverse">View More</a> </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+
+
+    <!-- ABOUT -->
+    <section class="bg-white">
+      <!-- Right Background -->
+      <div class="main-page-section half_left_layout">
+        <div class="main-half-layout half_right_layout"> </div>
+
+        <!-- Left Content -->
+        <div class="main-half-layout-container half_right_layout">
+          <div class="about-us-con">
+            <h3>Collaborate on a project</h3>
+            <p>Contact us for Collaborating on Projects. Click on Contact to Contact us..</p>
+            <ul class="count-info row">
+              <li class="col"> <span class="counter">5000</span><span>+</span>
+                <p>Collaboration</p>
+              </li>
+              <li class="col"> <span class="counter">750</span><span>+</span>
+                <p>Projects</p>
+              </li>
+            </ul>
+            <a href="{% url 'job_lists' %}" class="btn">Find a Jobs</a> </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </section>
+  </div>
+
+    {% endblock %}

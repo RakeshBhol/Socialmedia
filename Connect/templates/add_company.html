@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block body %}
+
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Login Register -->
+    <section class="login-register padding-top-100 padding-bottom-150">
+      <div class="container"> 
+        
+        <!-- Payments Steps -->
+        <div class="inside-log-reg">
+              
+              <!-- Nav Tabs -->
+              <ul class="nav">
+                  Welcome! {{ request.user.userdatabase_set.first.name }} ! <br>
+                <li class="">
+                  <a class="nav-link active " id="reg-tab" data-toggle="tab" href="#reg" role="tab" aria-selected="false">Start New Company</a>
+                </li>
+              </ul>
+              
+              
+              <div class="tab-content" id="myTabContent"> 
+
+                <!-- ADD Company -->
+                <div class="tab-pane show active" id="reg" role="tabpanel" aria-labelledby="reg-tab">
+                  <form action="{% url 'addCompany' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                       <center><img id="output" style="border-radius: 50%;" width="200" height="200" /></center>
+                    {% if message %}
+                    <center style="color: red; font-size: 20px;"><em>{{message}}</em></center>
+                    {% endif %}
+                    <ul class="row">
+                      
+                      <!-- Name -->
+                      <li class="col-md-6">
+                        <label> Company Full Name <span style="color: red;">*</span>
+                          {{ form.name }}
+                        </label>
+                      </li>
+                      
+                      <!-- Email -->
+                      <li class="col-md-6">
+                        <label> Company Email Address <span style="color: red;">*</span>
+                          {{ form.email }}
+                         </label>
+                      </li>
+                      
+                      <!-- Name -->
+                      <li class="col-md-4">
+                        <label> Added by User <span style="color: red;">*</span>
+                          <input type="text" name="addedby" value="{{ request.user.username }}" placeholder="" class="form-control">
+                        </label>
+                      </li>
+
+
+                      <li class="col-md-4">
+                        <label> Company Contact Number <span style="color: red;">*</span>
+                         {{ form.number }}
+                        </label>
+                      </li>
+
+                      <li class="col-md-4">
+                        <label> Company Category <span style="color: red;">*</span>
+                         {{ form.category }}
+                        </label>
+                      </li>
+
+                      <li class="col-md-12">
+                        <label> Company Title
+                         {{ form.company_title }}
+                        </label>
+                      </li>
+
+
+                      <li class="col-md-6">
+                        <label> Company Logo <span style="color: red;">*</span>
+                          {{ form.logo }}
+                        </label>
+                      </li>
+						
+						<li class="col-md-6">
+                        <label> LinkedIn Account
+                          {{ form.linkedin_ac }}
+                        </label>
+                      </li>
+
+
+					  
+                      <li class="col-md-6">
+                        <label> Company Location
+                          {{ form.location }}
+                        </label>
+                      </li>
+					  
+					  
+                      <li class="col-md-6">
+                        <label> Company Website <span style="color: red;">*</span>
+                          {{ form.website }}
+                        </label>
+                      </li>
+
+                         <li class="col-md-12">
+                        <label> About You
+                          {{ form.about }}
+                        </label>
+                      </li>
+
+                      
+                      <!-- ADD -->
+                      <li class="col-md-12 text-center">
+                        <button type="submit" class="btn">ADD</button>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+
+
+              </div>
+         
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+    {% endblock %}

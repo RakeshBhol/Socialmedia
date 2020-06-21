@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block body %}
+
+<!-- Content -->
+  <div id="content"> 
+    
+    <!-- Papular Companies -->
+    <section class="padding-bottom-100">
+      <div class="compny-profile"> 
+        <!-- SUB Banner -->
+        <div class="profile-bnr">
+          <div class="container"> 
+            
+            <!-- User Iinfo -->
+            <div class="user-info">
+              <div class="col-left">
+                <div class="user-in">
+                  <h1>{{detail.name}}
+                    <a class="veri" href="companies-detail.html#." data-toggle="tooltip" data-placement="top" title="Verified">
+                      <i class="fa fa-check"></i>
+                    </a>
+                  </h1>
+                  <h6>{{detail.category}}</h6>
+                  <p>{{detail.location}}  ( <a href="">View Location</a> )</p>
+                  
+                  <!-- Followers -->
+                  <div class="followr">
+                    <ul class="row">
+                      <li class="col-sm-6">
+                        <p>Followers ( {{count}} )</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Col Info -->
+              <div class="col-left">
+                <div class="user-in">
+                  <div class="right-top-bnr">
+                    <div class="connect">
+                      <a href="" data-toggle="modal" data-target="#myModal">
+                       <i class="fa fa-user-plus"></i> Contact Company
+                      </a>
+                      {% if followers == "" %}
+
+                      <a href="{% url 'follow_company' detail.id %}">
+                        <i class="fa fa-user-plus"></i> Follow
+                      </a>
+                      {% else %}
+                        <a>
+                        <i class="fa fa-user-plus"></i> Following
+                      </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                  
+                  <!-- Social Icon -->
+                  <div class="social-links">
+                    {% if detail.facebook_ac %}
+                    <a href="companies-detail.html#.">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                    {% endif %}
+                    {% if detail.twitter_ac %}
+                    <a href="companies-detail.html#.">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if detail.google_ac %}
+                    <a href="companies-detail.html#.">
+                      <i class="fab fa-google"></i>
+                    </a>
+                    {% endif %}
+                    {% if detail.linkedin_ac %}
+                    <a href="companies-detail.html#.">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+                    {% if detail.email %}
+                    <a href="companies-detail.html#.">
+                      <i class="far fa-envelope"></i>
+                    </a>
+                    {% endif %}
+                  </div>
+                  
+                  <!-- Stars -->
+                  <ul class="row">
+                    <li class="col-sm-6">
+                      <div class="stars"> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span></span> </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal POPUP -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <h6><a class="close" href="companies-detail.html#." data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></a> Send Message</h6>
+
+                <!-- Forms -->
+                <form action="{% url 'contact-company' detail.id %}" method="post">
+                  {% csrf_token %}
+                  <ul class="row">
+                    <li class="col-md-6">
+                      <input type="text" name="f_name" placeholder="First Name" required class="form-control">
+                    </li>
+                    <li class="col-md-6">
+                      <input type="text" name="l_name" placeholder="Last Name" class="form-control">
+                    </li>
+                    <li class="col-md-6">
+                      <input type="text" name="country" placeholder="Country" class="form-control" required>
+                    </li>
+                    <li class="col-md-6">
+                      <input type="email" name="email" placeholder="Email" class="form-control" required>
+                    </li>
+                    <li class="col-md-12">
+                      <textarea name="message" placeholder="Your Message" class="form-control" required></textarea>
+                    </li>
+                    <li class="col-md-12 text-center">
+                      <button type="submit" class="btn">Send message</button>
+                    </li>
+                  </ul>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile Company Content -->
+        <div class="profile-company-content main-user">
+          <div class="container"> 
+            
+            <!-- Nav Tabs -->
+            <div class="navi-sticky">
+              <div class="sticky">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li><a class="nav-link active" data-toggle="tab" href="/" role="tab" aria-selected="true">About</a> </li>
+                  <li><a class="nav-link"  href="{% url 'job_lists' %}" role="tab" aria-selected="true">Jobs</a> </li>
+                  <li><a class="nav-link" data-toggle="modal" data-target="#myModal" href="" role="tab" aria-selected="true">Contact</a> </li>
+                  <li><a class="nav-link" data-toggle="tab" data-target="#folow" href="" role="tab" aria-selected="true">Followers<small>( {{count}} )</small> </a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="row"> 
+              <!-- SIDE BAR -->
+              <div class="col-lg-4"> 
+                
+                <!-- Company Information -->
+                <div class="sidebar"> 
+                  
+                  <!-- Heading for mobile Collapse -->
+                  <h5 class="main-title">Company Information
+                  {% if request.user.username == detail.usr.username %}
+                  <a href="{% url 'Upddate_Company_details' detail.id %}" style="float: right;">Edit</a>
+                  {% endif %}
+                    </h5>
+                  <div class="navbar-expand-lg"> 
+                    <!-- Heading for mobile Collapse --> 
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-info" aria-expanded="false">
+                      Company Information
+                    </a>
+                    <div class="collapse navbar-collapse" id="cmpny-info">
+                      <div class="side-bar-indide"> 
+                        
+                        <!-- Company Images -->
+                        <div class="compny-thumbnail">
+                          <img class="img-responsive" src="{{ detail.logo.url }}" alt=""> </div>
+                        
+                        <!-- Company Information -->
+                        <div class="sidebar-information">
+                          <ul class="single-category">
+                            <li>
+                              <h6 class="title">Industry</h6>
+                              <span class="subtitle">{{detail.category}}</span> </li>
+                            <li>
+                              <h6 class="title">Location</h6>
+                              <span class="subtitle">{{detail.location}}</span> </li>
+                            <li>
+                              <h6 class="title">Employees</h6>
+                              <span class="subtitle">21,245</span> </li>
+                            <li>
+                              <h6 class="title">Company Registration</h6>
+                              <span class="subtitle">HFR67656</span> </li>
+                            <li>
+                              <h6 class="title">Operating Hours</h6>
+                              <span class="subtitle">10:00 AM - 5:00 PM</span> </li>
+                            <li>
+                              <h6 class="title">Email</h6>
+                              <div class="subtitle"><a href="companies-detail.html#.">{{detail.email}}</a> </div>
+                            </li>
+                            <li>
+                              <h6 class="title">Website</h6>
+                              <div class="subtitle"> <a href="https://webicode.com" target="_blank">{{detail.website}}</a> </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Company Rating -->
+                <div class="sidebar">
+                  <h5 class="main-title">Company Rating</h5>
+                  <div class="navbar-expand-lg"> 
+                    <!-- Heading for mobile Collapse --> 
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-rtng" aria-expanded="false"> Company Rating </a>
+                    <div class="collapse navbar-collapse" id="cmpny-rtng">
+                      <div class="side-bar-indide">
+                        <div class="sidebar-information">
+                          <ul class="single-category com-rate">
+                            <li>
+                              <h6 class="title">Expertise:</h6>
+                              <span class="subtitle"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Knowledge:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Quality:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Price:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Services:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Tab Content -->
+              <div class="col-lg-8">
+                <div class="tab-content"> 
+                  
+                  <!-- About Company -->
+                  <div id="about" class="tab-pane fade show active">
+                    <div class="profile-main">
+                      <h3>About the Company</h3>
+                      <div class="profile-in">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus 
+                          similique aliquidautem laudantium sapiente ad enim ipsa modi labo rum accusantium deleniti neque. </p>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, nihil, dolores, culpa ullam vero ipsum placeat 
+                          accusamus nemoitate id molestiae consectetur quae pariatur repudi andae vel ex quaerat nam iusto aliquid 
+                          laborum quia adipisci aut ut imcati nisi deleniti tempore maxime sequi fugit reiciendis libero quo. Rerum
+                          assumenda.</p>
+                        <!-- Video -->
+                        <iframe class="margin-bottom-30" src="https://www.youtube.com/embed/uVju5--RqtY"></iframe>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus 
+                          similique aliquidautem laudantium sapiente ad enim ipsa modi labo rum accusantium deleniti neque. </p>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, nihil, dolores, culpa ullam vero ipsum placeat 
+                          accusamus nemoitate id molestiae consectetur quae pariatur repudi andae vel ex quaerat nam iusto aliquid 
+                          laborum quia adipisci aut ut imcati nisi deleniti tempore maxime sequi fugit reiciendis libero quo. Rerum
+                          assumenda.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Follows -->
+                  <div id="folow" class="tab-pane fade">
+                    <div class="profile-main">
+                      <h3>Followers( {{count}} )</h3>
+                      <div class="profile-in"> 
+                        
+                        <!-- Follows -->
+                        <div class="followers-sec">
+                          {% if follower %}
+                          <ul>
+                            <!-- Follows -->
+                            <li>
+                              <div class="inside">
+                                <div class="thumb"> <img src="{{ follower.user.image.url }}" alt="" class="img-responsive"> </div>
+                                <h4>{{follower.user.name}}</h4>
+                                <a href="{% url 'UserProfile' follower.user.usr.username %}" class="btn btn-inverse"> View Profile</a>
+                              </div>
+                            </li>
+                          </ul>
+                          {% else %}
+                                <h5>No Followers of this Company.</h5>
+                          {% endif %}
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- ABOUT -->
+    <section class="bg-white"> 
+      <!-- Right Background -->
+      <div class="main-page-section half_left_layout">
+        <div class="main-half-layout half_right_layout"> </div>
+        
+        <!-- Left Content -->
+        <div class="main-half-layout-container half_right_layout">
+          <div class="about-us-con">
+            <h3>Collaborate on a project</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nibh dolor, efficitur eget pharetra ac, cursus sed sapien. Cras posuere ligula ut blandit varius. </p>
+            <ul class="count-info row">
+              <li class="col"> <span class="counter">5000</span><span>+</span>
+                <p>Collaboration</p>
+              </li>
+              <li class="col"> <span class="counter">750</span><span>+</span>
+                <p>Projects</p>
+              </li>
+            </ul>
+            <a href="companies-detail.html#." class="btn">Find a Jobs</a> </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </section>
+  </div>
+  
+
+{% endblock body %}

@@ -1,0 +1,430 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block body %}
+  <!-- Content -->
+<div id="content" xmlns="http://www.w3.org/1999/html">
+
+    <!-- Papular Companies -->
+    <section class="padding-bottom-100">
+      <div class="compny-profile user-profile">
+        <!-- SUB Banner -->
+        <div class="profile-bnr">
+          <div class="container">
+
+            <!-- User Iinfo -->
+            <div class="user-info">
+              <div class="">
+                <div class="user-in">
+                  <div class="pro-avatar"> <img src="{{ Profile.image.url }}" height="200" alt="" class="img-responsive" > </div>
+
+
+                  <h1>{{ Profile.name }}
+                    {% if Profile.usr.username == request.user.username %}
+                      <a href="{% url 'addCompany' %}" class=" margin-right-0" style="color: white; padding-left: 30px;" data-toggle="tooltip" data-placement="top" title="Start Your Company">
+                        <i  class="fa fa-plus-square"></i>
+                      </a>
+                    {% endif %}
+                      {% if request.user.username != Profile.usr.username %}
+                        {% if user_is_following == "" %}
+                        <span class="user-in">
+                          <span class="right-top-bnr" style="padding-left: 160px;">
+                          <a href="{% url 'follow' 'Following' Profile.id %}"><i class="fa fa-user-plus"></i> Follow</a>
+                          </span>
+                        </span>
+                        {% endif %}
+                        {% if user_is_following %}
+                        <span class="user-in">
+                          <span class="right-top-bnr" style="padding-left: 160px;">
+                          <a title="Already Following"><i class="fa fa-user-plus" aria-readonly="true"></i> Following</a>
+                          </span>
+                        </span>
+                        {% endif %}
+                      {% endif %}
+
+
+                    <a class="veri" href="#." data-toggle="tooltip" data-placement="top" title="Verified Member">
+                    <i class="fa fa-check"></i> </a> </h1>
+                  <h6>{{Profile.user_title}}</h6>
+                  <div class="social-links">
+                    {% if Profile.facebook_ac %}
+                    <a href="{{Profile.facebook_ac}}" title="{{Profile.facebook_ac}}"><i class="fab fa-facebook-f"></i></a>
+                    {% endif %}
+
+                    {% if Profile.twitter_ac %}
+                    <a href="#." title="{{Profile.twitter_ac}}"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+
+                    {% if Profile.google_ac %}
+                    <a href="#." title="{{Profile.google_ac}}"><i class="fab fa-google"></i></a>
+                    {% endif %}
+
+                    {% if Profile.linkedin_ac %}
+                    <a href="#." title="{{Profile.linkedin_ac}}"><i class="fab fa-linkedin-in"></i></a>
+                    {% endif %}
+
+                    {% if request.user.username == Profile.usr.username %}
+                      {% if request.user.userdatabase_set.first.whatshapp_ac %}
+                        <a href="#." title="{{request.user.userdatabase_set.first.whatshapp_ac}}"><i class="fab fa-whatsapp"></i> </a>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if Profile.email %}
+                    <a href="#."  title="{{Profile.email}}"><i class="far fa-envelope"></i> </a>
+                    {% endif %}
+
+                    {% if request.user.username != Profile.usr.username %}
+                        {% if connection %}
+                          <a class="float-right margin-right-0" style="color: red;" data-toggle="tooltip" data-placement="top" title="Pending">
+                            <i  class="fa fa-exclamation"></i> </a>
+                        {% else %}
+                          <a href="{% url 'connections' 'Send_Request' Profile.id %}" class="float-right margin-right-0" data-toggle="tooltip" data-placement="top" title="Send Request">
+                            <i class="fa fa-exclamation"></i> </a> </div>
+                        {% endif %}
+                  {% endif %}
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Company Content -->
+        <div class="profile-company-content main-user">
+          <div class="container">
+
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li><a class="nav-link active" data-toggle="tab" href="#about" role="tab" aria-selected="true">Posts</a> </li>
+              {% if request.user.username == Profile.usr.username%}
+              <li><a class="nav-link" data-toggle="tab" href="#services" role="tab" aria-selected="true">My Companies</a> </li>
+              <li><a class="nav-link" data-toggle="tab" href="#contact" role="tab" aria-selected="true">New Post</a> </li>
+              {% endif %}
+
+              <li><a class="nav-link" data-toggle="tab" href="#folow" role="tab" aria-selected="true">Followers<small>({{follow_request.count}})</small></a> </li>
+              <li><a class="nav-link" data-toggle="tab" href="#folowng" role="tab" aria-selected="true">Following<small>({{Follow_sent.count}})</small></a> </li>
+            </ul>
+            <div class="row">
+              <!-- SIDE BAR -->
+              <div class="col-lg-4">
+
+                <!-- Company Information -->
+                <div class="sidebar">
+
+                  <!-- Heading for mobile Collapse -->
+                  <h5 class="main-title margin-bottom-30">User Information
+                      {% if request.user.username == Profile.usr.username %}
+                          <a href="{% url 'UpdateUserProfile' request.user.username  %}"><i class="fa fa-pencil-alt" style="float: right;"></i></a>
+                      {% endif %}
+                  </h5>
+                  <div class="navbar-expand-lg">
+                    <!-- Heading for mobile Collapse -->
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-info" aria-expanded="false"> User Information </a>
+                    <div class="collapse navbar-collapse" id="cmpny-info">
+                      <div class="side-bar-indide">
+                        <!-- Company Information -->
+                        <div class="sidebar-information">
+                          <ul class="single-category">
+                            <li>
+                              <h6 class="title">Name</h6>
+                              <span class="subtitle">{{Profile.name}}</span> </li>
+                            <li>
+                              <h6 class="title">Age</h6>
+                              <span class="subtitle">23 Years</span> </li>
+
+                            {% if Profile.location %}
+                            <li>
+                              <h6 class="title">Location</h6>
+                              <span class="subtitle">{{Profile.location}}</span>
+                            </li>
+                            {% endif %}
+
+                            {% if Profile.Degree %}
+                            <li>
+                              <h6 class="title">Experiance</h6>
+                              <span class="subtitle">{{Profile.experience}} Years</span>
+                            </li>
+                            {% endif %}
+
+                            {% if Profile.Degree %}
+                            <li>
+                              <h6 class="title">Degree</h6>
+                              <span class="subtitle">{{Profile.Degree}}</span>
+                            </li>
+                            {% endif %}
+
+                            {% if Profile.number %}
+                            <li>
+                              <h6 class="title">Phone</h6>
+                              <span class="subtitle">{{Profile.number}}</span>
+                            </li>
+                            {% endif %}
+
+                            {% if Profile.email %}
+                            <li>
+                              <h6 class="title">Email</h6>
+                              <div class="subtitle"><a href="#.">{{Profile.email}}</a> </div>
+                            </li>
+                            {% endif %}
+                          {% if Profile.website %}
+                            <li>
+                              <h6 class="title">Website</h6>
+                              <div class="subtitle"> <a href="{{form.website}}" target="_blank">{{Profile.website}}</a> </div>
+                            </li>
+                          {% endif %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Company Rating -->
+                <div class="sidebar">
+                  <h5 class="main-title margin-bottom-20">Rating</h5>
+                  <div class="navbar-expand-lg">
+                    <!-- Heading for mobile Collapse -->
+                    <a class="collapsed main-title fr-mob" data-toggle="collapse" data-target="#cmpny-rtng" aria-expanded="false"> Rating </a>
+                    <div class="collapse navbar-collapse" id="cmpny-rtng">
+                      <div class="side-bar-indide">
+                        <div class="sidebar-information">
+                          <ul class="single-category com-rate">
+                            <li>
+                              <h6 class="title">Expertise:</h6>
+                              <span class="subtitle"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Knowledge:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Quality:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Price:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> <i class="far fa-star"></i> </span> </li>
+                            <li>
+                              <h6 class="title">Services:</h6>
+                              <span class="subtitle"><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half-alt"></i> </span> </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tab Content -->
+              <div class="col-lg-8">
+                <div class="tab-content">
+
+                  <!-- POSTS -->
+                   <div id="about" class="tab-pane fade show active" style="height: 800px; overflow-y: scroll;">
+                    {% if all_posts == "" %}
+                     <div class="profile-main" style="padding: 5px 15px;">
+                          <p>There is no Post of this user.</p>
+                     </div>
+                     {% else %}
+                       {% for post in all_posts %}
+                            <div class="profile-main" style="padding: 5px 15px;">
+                      <h3>{{ post.title }}</h3>
+                      <div class="profile-in">
+                        <p>{{ post.blog }}</p>
+                        <!-- Video -->
+
+                          <center>{{ post.youtube_video | safe }}</center><br><br>
+                                {% if post.id in like_by_me_Ids %}
+                                    <img width="30" src="https://cdn1.iconfinder.com/data/icons/ui-5/502/like-512.png">
+                                {% else %}
+                                    <a href="{% url 'likes' post.id Profile.usr.username %}">
+                                        <img width="30" src="https://www.freepnglogos.com/uploads/like-png/facebook-favorite-favourite-like-thumbs-thumbs-20.png"></a>
+                                {% endif %}
+
+                          {{ post.bloglikes_set.all.count }}
+                      </div>
+                    </div>
+                        {% endfor %}
+                     {% endif %}
+                  </div>
+                    <!-- Company -->
+                  <div id="services" class="tab-pane fade">
+                    <div class="profile-main">
+                      <h3>Your Company</h3>
+                      <div class="profile-in">
+                        <div class="row">
+                          {% if companies == "" %}
+                              <p>You don't have any company yet. Click on + button to start/add your Company</p>
+                          {% else %}
+                            {% for d in companies %}
+                              <!-- Icon -->
+                              <div class="col-md-6">
+                                <div class="icon-box ib-style-5 ib-center ib-text-alt ib-bordered ib-bordered-white
+                                 ib-bordered-thin ib-medium ib-circle">
+                                  <img class="ib-icon" src="{{detail.logo.url}}">
+                                  <div class="ib-info"><div class="hover-over">
+                                    <h4 class="h6">{{detail.name}}</h4><p>{{detail.category}}</p>
+                                    <a href="{% url 'company_details' d.id %}" class="btn">View Company</a>
+                                  </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              {% endfor %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                    <!-- Contact -->
+                  <div id="contact" class="tab-pane fade">
+                    <div class="profile-main">
+                      <h3>Write your Blog, {{ request.user.userdatabase_set.first.name }}</h3>
+                      <div class="profile-in">
+                        <p>You can share your thoughts and show your work with all world!</p>
+                        <form action="{% url 'post' %}" method="post"  class="contact-company">
+                          {% csrf_token %}
+                          <ul class="row">
+                            <li class="col-sm-12">
+                              <label>Blog Title *</label>
+                              {{ form.title }}
+                            </li>
+
+                              <li class="col-sm-12">
+                                <label>Your Blog *</label>
+                              {{ form.blog }}<br>
+                              </li>
+
+                              <li class="col-sm-12">
+                                <label>Blog Youtube Video Embed Code</label>
+                              {{ form.youtube_video }}
+                            </li>
+                          </ul>
+                          <button type="submit" class="btn">Post</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <!-- Follows -->
+                  <div id="folow" class="tab-pane fade">
+                    <div class="profile-main">
+                      <h3>Followers</h3>
+                      <div class="profile-in">
+
+                        <!-- Follows -->
+                        <div class="followers-sec">
+                          <ul>
+                            <!-- Follows -->
+                            {% for i in follow_request %}
+                            <li>
+                              <div class="inside">
+                                <!--<div class="thumb">-->
+                                <div class="thumb">
+                                  <img src="{{i.following.image.url}}" alt="" class="img-responsive">
+                                </div>
+                                <h4>{{i.following.name}}</h4>
+                                <p> <span>Worked As:</span> {{i.following.user_title}}</p>
+                                <a href="{% url 'UserProfile' i.following.usr.username  %}" class="btn btn-inverse"> View Profile</a>
+                              </div>
+                            </li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Following -->
+                  <div id="folowng" class="tab-pane fade">
+                    <div class="profile-main">
+                      <h3>Following</h3>
+                      <div class="profile-in">
+
+                        <!-- Follows -->
+                        <div class="followers-sec">
+                          <ul>
+                            <!-- Following -->
+                            {% for i in Follow_sent %}
+                              <li>
+                                <div class="inside">
+                                  <!--<div class="thumb">-->
+                                  <div class="thumb">
+                                    <img src="{{i.followers.image.url}}" alt="" class="img-responsive">
+                                  </div>
+                                  <h4>{{i.followers.name}}</h4>
+                                  <p> <span>Worked As:</span> {{i.followers.user_title}}</p>
+                                  <a href="{% url 'UserProfile' i.followers.usr.username  %}" class="btn btn-inverse"> View Profile</a>
+                                </div>
+                              </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    </section>
+
+    <!-- WHAT OUR USERS SAY -->
+    <section class="bg-white padding-top-100 padding-bottom-100">
+      <div class="container">
+
+        <!-- Heading Block -->
+        <div class="heading-block text-center">
+          <h2>Review About {{Profile.name}}</h2>
+        </div>
+
+        <!-- Testimonial Style 4 -->
+        <div class="testimonial style-4">
+          <div class="testi">
+            <!-- Testi Slides With Image -->
+            <div class="testi-slide">
+
+              <!-- Slides -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2a.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour,
+                    or randomised words which don't look even slightly believable.” </p>
+                  <h6>WHITE SHADOW WALKER</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+
+              <!-- Slides -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2b.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations  but the majority have suffered alteration. but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.”</p>
+                  <h6>M_ADNAN</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+
+              <!-- Slides 1 -->
+              <div>
+                <!-- Avatar -->
+                <div class="avatar"><img class="img-circle img-responsive" src="{% static 'images/testimonial-2c.png' %}" alt=" "></div>
+                <div class="text-in">
+                  <p>“There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, Alteration in some form randomised words which don't look even slightly believable.”</p>
+                  <h6>DAVID WALKER</h6>
+                  <span> CEO/FOUNDER DELL</span>
+                  <!-- Stars -->
+                  <div class="rating-stars"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+    {% endblock %}

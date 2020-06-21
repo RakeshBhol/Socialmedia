@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+    <main class="cd-main-content">
+        <section class="cd-gallery">
+        <ul>
+        {% for c in companies %}
+            <li class="mix">
+                <div class="team-inside">
+                    <div class="img-sec"> <img src="{{ c.logo.url }}" class="img-responsive" alt="{{ c.name }}" >
+                        <div class="hover-over">
+                            <div class="position-center-center">
+                                <a href="{% url 'company_details' c.id %}" class="btn">View Company</a> </div>
+                        </div>
+                    </div>
+                    <div class="txt-sec">
+                        <h5><a href="#."> {{ c.name }} </a></h5>
+                        <h6>Started by {{c.usr.username}}</h6>
+                        <span>{{ c.company_title }}</span> <span><i class="fa fa-map-marker"></i>{{ c.location }}</span> </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+</section>
+</div>
+{% endblock body %}

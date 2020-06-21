@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+  <!-- Content -->
+  <div id="content"> 
+    
+    <!-- Banner -->
+    <section class="sub-bnr">
+      <div class="container">
+        <h2>Get in connect with us</h2>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#"> Contact</a></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+    
+
+    <!-- Contact -->
+    <section class="bg-white padding-bottom-100 padding-top-100">
+      <div class="container"> 
+        
+        <!-- Cpntact Form -->
+        <div class="contact-form">
+          <div class="heading-block text-center"> <span class="h2">Need help ?</span> </div>
+          <form method="post" action="{% url 'contact-us' %}">
+            {% csrf_token %}
+            <ul class="row">
+              <li class="col-md-6">
+                <label>Firt Name <span style="color: red;"> * </span>
+                  <input type="text" name="f_name" placeholder="first name" required class="form-control">
+                </label>
+              </li>
+              <li class="col-md-6">
+                <label>Last Name
+                  <input type="text" name="l_name" placeholder="last name" class="form-control">
+                </label>
+              </li>
+              <li class="col-md-6">
+                <label>Email <span style="color: red;"> * </span>
+                  <input type="email" name="email" placeholder="Your Email" class="form-control" required>
+                </label>
+              </li>
+              <li class="col-md-6">
+                <label>Reason to Contact us?*
+                  <select>
+                    <option>Want to have your own website?</option>
+                    <option>Problem for uploading your data!</option>
+                    <option>Unable to view profile of your friend!</option>
+                    <option>Company Related</option>
+                    <option>Scams</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+              </li>
+              <li class="col-md-12">
+                <label class="msg">Additional Message
+                  <textarea class="form-control" name="msg" placeholder="Send us your query.." required></textarea>
+                </label>
+              </li>
+              <li class="col-md-12 text-center">
+                <button type="submit" class="btn btn-grident">Submit Inquiry</button>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+
+{% endblock body %}

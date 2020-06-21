@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Social Networking Site</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+<link href="{% static 'fonts/flaticon.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+
+<!-- fontawesome  -->
+<link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+
+
+<!-- JavaScripts -->
+<script src="{% static 'js/modernizr.js' %}"></script>
+
+<!-- Online Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet">
+
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
+</head>
+<body>
+
+<!-- Wrap -->
+<div id="wrap">
+
+  <!-- header -->
+  <header class="sticky">
+    <div class="container">
+
+      <!-- Logo -->
+      <div class="logo"> <a href="/"><img class="img-responsive" src="{% static 'images/logo-dark.png' %}" style="height: 30px; " alt="" ></a> </div>
+      <nav class="navbar ownmenu navbar-expand-lg" id="nav-resposive">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+        <div class="collapse navbar-collapse" id="navbarNav" data-parent="#nav-resposive">
+          <ul class="nav">
+            <li> <a href="{% url 'home' %}" aria-selected="true">Home</a> </li>
+            {% if request.user.is_authenticated %}
+              <li> <a href="{% url 'UserProfile' request.user.username %}">Profile</a> </li>
+            {% endif %}
+            <li> <a href="{% url 'professional_html' 'all' %}" aria-selected="true">Connections</a> </li>
+            <li> <a href="{% url 'all_companies' %}" aria-selected="true">Companies</a> </li>
+            <li> <a href="{% url 'job_lists' %}" aria-selected="true">Jobs </a> </li>
+            <li> <a href="{% url 'contact'%}" aria-selected="true">Contact </a> </li>
+
+        <!-- Nav Right -->
+        <div class="nav-right">
+          <button class="social-toggler collapsed" type="button" data-toggle="collapse" data-target="#socialNav" aria-controls="socialNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="fa fa-share-alt"></span> </button>
+          <div class="collapse navbar-collapse navbar-expand-lg" id="socialNav" data-parent="#nav-resposive">
+            {% if request.user.is_authenticated %}
+              <div class="social_icons">
+              <ul>
+                {% if request.user.userdatabase_set.first.whatshapp_ac %}
+                <li><a href="{{request.user.userdatabase_set.first.whatshapp_ac}}"><i class="fab fa-whatsapp"></i></a></li>
+                {% endif %}
+                {% if request.user.userdatabase_set.first.facebook_ac %}
+                <li><a href="{{request.user.userdatabase_set.first.facebook_ac}}"><i class="fab fa-facebook-f"></i></a></li>
+                {% endif %}
+                {% if request.user.userdatabase_set.first.twitter_ac %}
+                <li><a href="{{request.user.userdatabase_set.first.twitter_ac}}"><i class="fab fa-twitter"></i></a></li>
+                {% endif %}
+                {% if request.user.userdatabase_set.first.google_ac %}
+                <li><a href="{{request.user.userdatabase_set.first.google_ac}}"><i class="fab fa-google-plus-g"></i></a></li>
+                {% endif %}
+                {% if request.user.userdatabase_set.first.linkedin_ac %}
+                <li><a href="{{request.user.userdatabase_set.first.linkedin_ac}}"><i class="fab fa-linkedin-in"></i></a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'logout' %}"><i class="fa fa-unlock-alt"></i></a></li>
+                {% endif %}
+              </ul>
+            </div>
+              {% endif %}
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </header>
+
+
+
+  {% block body %}
+  {% endblock body %}
+
+
+    <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-wrapper">
+
+      <!-- Footer Top -->
+      <div class="footer-top">
+        <div class="footer-top-wrapper">
+          <div class="container">
+            <div class="row">
+              <!-- About Block -->
+              <div class="col-md-6">
+                <div class="block block-companies">
+                  <h3 class="block-title">Latest Companies</h3>
+                  <div class="block-content">
+                    <ul>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> TechSim</a></li>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> WebHost</a></li>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> Tech Company</a></li>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> Newz Villa</a></li>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> Webcode</a></li>
+                      <li> <a href="{% url 'all_companies' %}"> <img src="{% static 'images/company-img-1.jpg' %}" alt="" class="img-responsive"> Urmie Private Ltd.</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-bottom-wrapper">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6 copyright">
+                <p>Contact us for more details and create Websites <a href="https://webicode.com/"> like this.</a></p>
+              </div>
+              <div class="col-md-6 social-links">
+                <ul class="right">
+                  <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                  <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                  <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Footer Bottom -->
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+</div>
+
+<script>
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+<script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/own-menu.js' %}"></script>
+<script src="{% static 'js/jquery.isotope.min.js' %}"></script>
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.mixitup.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
