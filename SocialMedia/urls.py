@@ -3,10 +3,12 @@ from django.urls import path
 from Connect.views import *
 from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls import include, url
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include("django.contrib.auth.urls")),
     path('login/', Login, name="login"),
     path('contact-us/', Contact, name="contact"),
     path('AddQuery/', Contact_Us, name="contact-us"),

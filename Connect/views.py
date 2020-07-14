@@ -42,7 +42,7 @@ def Login(request):
     Dict = {
         "error": error, "form": form
     }
-    return render(request, "login_register.html", Dict)
+    return render(request, "login.html", Dict)
 
 def Logout(request):
     logout(request)
